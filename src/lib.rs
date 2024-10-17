@@ -5,6 +5,7 @@ use sjis::read_text;
 #[derive(Default, Debug)]
 pub struct CsvReader {
     file_path: String,
+    counter: usize,
 }
 
 impl CsvReader {
@@ -15,7 +16,7 @@ impl CsvReader {
         }
     }
 
-    pub fn read<F>(&self, process_row: F)
+    pub fn read<F>(&mut self, process_row: F)
     where
         F: Fn(LinkedHashMap<String, String>),
     {
@@ -37,6 +38,7 @@ impl CsvReader {
                     lhm.insert(title[col].clone(), val.to_string());
                 }
                 process_row(lhm);
+                self.counter += 1;
             }
         }
     }
