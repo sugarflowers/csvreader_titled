@@ -20,7 +20,7 @@ impl CsvReader {
         self.counter
     }
     
-    pub fn read<F>(&mut self, process_row: F)
+    pub fn read<F>(&mut self, mut process_row: F)
     where
         F: FnMut(LinkedHashMap<String, String>),
     {
