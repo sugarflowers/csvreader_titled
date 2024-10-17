@@ -54,23 +54,15 @@ impl CsvReader {
     }
 }
 
+#[cfg(test)]
+mod tests {
+    use crate::CsvReader;
 
-fn main() {
-    CsvReader::open("data.csv").read(|row| {
-        //println!(">>> {:?}", row);
-        println!("{}", row["発注管理ID"]);
-    });
-}
-
-/*
-// 重複がないかチェックする。ユニークならtrue
-fn is_unique(data: &Vec<String>) -> bool {
-    let mut set = HashSet::new();
-    for item in data {
-        if !set.insert(item) {
-            return false;
-        }
+    #[test]
+    fn csv_read_test() {
+        CsvReader::open("data.csv").read(|row| {
+            println!(">>> {:?}", row);
+            //println!("{}", row["発注管理ID"]);
+        });
     }
-    true
 }
-*/
