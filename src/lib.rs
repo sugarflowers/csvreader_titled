@@ -62,7 +62,6 @@ mod tests {
     fn csv_read_test() {
         CsvReader::open("data.csv").read(|row| {
             println!(">>> {:?}", row);
-            //println!("{}", row["発注管理ID"]);
         });
     }
 }
