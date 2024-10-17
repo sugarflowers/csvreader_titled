@@ -1,8 +1,6 @@
 use csv::ReaderBuilder;
-use std::fs::File;
-use std::io::{BufReader, Read};
 use linked_hash_map::LinkedHashMap;
-use sjis::{decode, is_sjis};
+use sjis::read_text;
 
 #[derive(Default, Debug)]
 pub struct CsvReader {
@@ -21,18 +19,8 @@ impl CsvReader {
     where
         F: Fn(LinkedHashMap<String, String>),
     {
-        let file = File::open(&self.file_path).unwrap();
-        let mut reader = BufReader::new(file);
-        let mut buffer = Vec::new();
-        reader.read_to_end(&mut buffer).unwrap();
 
-
-        let content = if is_sjis(&buffer) {
-            decode(buffer)
-        } else {
-            String::from_utf8(buffer).unwrap()
-        };
-
+        let content = read_text(&self.file_path);
 
         let mut rdr = ReaderBuilder::new().has_headers(false).from_reader(content.as_bytes());
         let mut title:Vec<String> = Vec::new();
@@ -54,6 +42,7 @@ impl CsvReader {
     }
 }
 
+
 #[cfg(test)]
 mod tests {
     use crate::CsvReader;
@@ -61,7 +50,9 @@ mod tests {
     #[test]
     fn csv_read_test() {
         CsvReader::open("data.csv").read(|row| {
-            println!(">>> {:?}", row);
+            //println!(">>> {:?}", row);
+            println!("{}", row["発注管理ID"]);
         });
     }
 }
+
