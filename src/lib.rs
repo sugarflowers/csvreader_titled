@@ -60,5 +60,14 @@ mod tests {
             println!("{}", row["発注管理ID"]);
         });
     }
+
+    #[test]
+    fn get_count() {
+        let mut cr = CsvReader::open("data.csv");
+        cr.read(|row| {
+            println!("{:?}", row);
+        });
+        println!("{}", cr.rows_count());
+    }
 }
 
