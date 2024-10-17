@@ -22,7 +22,7 @@ impl CsvReader {
     
     pub fn read<F>(&mut self, process_row: F)
     where
-        F: Fn(LinkedHashMap<String, String>),
+        F: FnMut(LinkedHashMap<String, String>),
     {
         self.counter = 0;
         let content = read_text(&self.file_path);
