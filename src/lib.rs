@@ -16,7 +16,7 @@ impl CsvReader {
         }
     }
 
-    pub fn count(&self) -> usize {
+    pub fn rows_count(&self) -> usize {
         self.counter
     }
     
