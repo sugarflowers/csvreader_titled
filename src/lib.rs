@@ -15,7 +15,7 @@ impl CsvReader {
         }
     }
 
-    pub fn read<F>(&self, process_row: F) 
+    pub fn read<F>(&self, process_row: F) -> usize
     where
         F: Fn(LinkedHashMap<String, String>),
     {
@@ -24,6 +24,8 @@ impl CsvReader {
 
         let mut rdr = ReaderBuilder::new().has_headers(false).from_reader(content.as_bytes());
         let mut title:Vec<String> = Vec::new();
+        let mut row_count = 0;
+        
         for (idx, result) in rdr.records().enumerate() {
             let processed_record: Vec<String> = result.unwrap()
                 .iter().map(|field| field.to_string()).collect();
@@ -36,9 +38,10 @@ impl CsvReader {
                     lhm.insert(title[col].clone(), val.to_string());
                 }
                 process_row(lhm);
+                row_count += 1;
             }
         }
-
+        row_count
     }
 }
 
