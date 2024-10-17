@@ -5,7 +5,7 @@ use sjis::read_text;
 #[derive(Default, Debug)]
 pub struct CsvReader {
     file_path: String,
-    pub counter: usize,
+    counter: usize,
 }
 
 impl CsvReader {
@@ -16,11 +16,15 @@ impl CsvReader {
         }
     }
 
+    pub fn count(&self) -> usize {
+        self.counter
+    }
+    
     pub fn read<F>(&mut self, process_row: F)
     where
         F: Fn(LinkedHashMap<String, String>),
     {
-
+        self.counter = 0;
         let content = read_text(&self.file_path);
 
         let mut rdr = ReaderBuilder::new().has_headers(false).from_reader(content.as_bytes());
