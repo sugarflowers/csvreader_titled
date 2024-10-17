@@ -5,7 +5,7 @@ use sjis::read_text;
 #[derive(Default, Debug)]
 pub struct CsvReader {
     file_path: String,
-    counter: usize,
+    pub counter: usize,
 }
 
 impl CsvReader {
